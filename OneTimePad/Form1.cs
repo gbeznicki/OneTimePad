@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -32,7 +31,7 @@ namespace OneTimePad
                     MessageBox.Show("Wprowadź tekst do szyfrowania");
                     return;
                 }
-                if(textBoxKey.Text.Length == 0)
+                if (textBoxKey.Text.Length == 0)
                 {
                     MessageBox.Show("Najpierw wylosuj klucz do szyfrowania");
                     return;
@@ -42,6 +41,8 @@ namespace OneTimePad
 
                 //wyświetlenie zaszyfrowanej wiadomości przy pomocy kodowania Base64 (ze względu na problem ze znakami z alfabetu łacińskiego
                 textBoxSifred.Text = System.Convert.ToBase64String(encrypted);
+
+                MessageBox.Show("Szyfrowanie zakończono!");
             }
             else //TODO: import z pliku i szyfrowanie
             {
@@ -52,7 +53,12 @@ namespace OneTimePad
                 }
                 //zapisanie zaszyfrowanego strumienia bajtów do pliku
                 File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\zaszyfrowane", encryptor.encrypt(fileToEncryptOrDecrypt));
+
+                MessageBox.Show("Zakończono szyfrowanie! Zaszyfrowany plik znajdziesz tutaj: \n " +
+                    "D:\\Pulpit\\AA_One_time\\zaszyfrowane");
+
             }
+
         }
 
         private void buttonDesifre_Click(object sender, EventArgs e)
@@ -73,6 +79,9 @@ namespace OneTimePad
 
                 //wypisanie odszyfrowanego tekstu wykorzystując kodowanie UTF-8
                 textBoxDesifred.Text = Encoding.UTF8.GetString(decrypted);
+
+                MessageBox.Show("Deszyfrowanie zakończono!");
+
             }
             else //TODO: import z pliku i deszyfrowanie
             {
@@ -83,6 +92,10 @@ namespace OneTimePad
 
                     //odszyfrowanie zapisanego w pamięci zaszyfrowanego pliku i zapisanie wyniku do pliku
                     File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\odszyfrowane" + fileExtension, encryptor.decrypt(fileToEncryptOrDecrypt));
+
+                    MessageBox.Show("Zakończono deszyfrowanie! Odszyfrowany plik znajdziesz tutaj: \n " +
+                    "D:\\Pulpit\\AA_One_time\\");
+
                 }
                 else
                 {
@@ -134,7 +147,7 @@ namespace OneTimePad
         {
             if (radioButtonFile.Checked)
             {
-                if(fileToEncryptOrDecrypt.Length > 32766)
+                if (fileToEncryptOrDecrypt.Length > 32766)
                 {
                     File.WriteAllText("D:\\Pulpit\\AA_One_time\\klucz.txt", encryptor.generateOneTimePadKey(fileToEncryptOrDecrypt.Length));
                     textBoxKey.Text = "Klucz jest zbyt długi aby do wyświetlić, został więc zapisany tutaj: \n" +
@@ -148,16 +161,20 @@ namespace OneTimePad
             else
             {
                 if (textBoxDesifred.Text.Length > 0)
-                    this.textBoxKey.Text = encryptor.generateOneTimePadKey(Encoding.GetEncoding("UTF-8").GetBytes(textBoxDesifred.Text.ToCharArray()).Length);
+                {
+                    textBoxKey.Text = encryptor.generateOneTimePadKey(Encoding.GetEncoding("UTF-8").GetBytes(textBoxDesifred.Text.ToCharArray()).Length);
+                }
                 else
+                {
                     textBoxKey.Text = encryptor.generateOneTimePadKey(256);
+                }
             }
         }
 
         private void buttonFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileToEncryptOrDecrypt = File.ReadAllBytes(openFileDialog.FileName);
                 IfFIleIsChosen.Text = "Plik został załadowany do pamięci";
