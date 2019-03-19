@@ -76,11 +76,18 @@ namespace OneTimePad
             }
             else //TODO: import z pliku i deszyfrowanie
             {
-                //odczytanie zaszyfrowanego pliku i zapisanie do zmiennej
-                fileToEncryptOrDecrypt = File.ReadAllBytes("D:\\Pulpit\\AA_One_time\\zaszyfrowane");
+                if (File.Exists("D:\\Pulpit\\AA_One_time\\zaszyfrowane"))
+                {
+                    //odczytanie zaszyfrowanego pliku i zapisanie do zmiennej
+                    fileToEncryptOrDecrypt = File.ReadAllBytes("D:\\Pulpit\\AA_One_time\\zaszyfrowane");
 
-                //odszyfrowanie zapisanego w pamięci zaszyfrowanego pliku i zapisanie wyniku do pliku
-                File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\odszyfrowane"+fileExtension, encryptor.decrypt(fileToEncryptOrDecrypt));
+                    //odszyfrowanie zapisanego w pamięci zaszyfrowanego pliku i zapisanie wyniku do pliku
+                    File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\odszyfrowane" + fileExtension, encryptor.decrypt(fileToEncryptOrDecrypt));
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono zaszyfrowanego pliku");
+                }
             }
 
         }
