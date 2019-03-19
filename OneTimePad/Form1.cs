@@ -45,6 +45,11 @@ namespace OneTimePad
             }
             else //TODO: import z pliku i szyfrowanie
             {
+                if (textBoxKey.Text.Length == 0)
+                {
+                    MessageBox.Show("Najpierw wylosuj klucz do szyfrowania");
+                    return;
+                }
                 //zapisanie zaszyfrowanego strumienia bajtów do pliku
                 File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\zaszyfrowane", encryptor.encrypt(fileToEncryptOrDecrypt));
             }
