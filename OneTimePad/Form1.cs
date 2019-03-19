@@ -127,7 +127,16 @@ namespace OneTimePad
         {
             if (radioButtonFile.Checked)
             {
-                textBoxKey.Text = encryptor.generateOneTimePadKey(fileToEncryptOrDecrypt.Length);
+                if(fileToEncryptOrDecrypt.Length > 32766)
+                {
+                    File.WriteAllText("D:\\Pulpit\\AA_One_time\\klucz.txt", encryptor.generateOneTimePadKey(fileToEncryptOrDecrypt.Length));
+                    textBoxKey.Text = "Klucz jest zbyt długi aby do wyświetlić, został więc zapisany tutaj: \n" +
+                        "D:\\Pulpit\\AA_One_time\\klucz.txt";
+                }
+                else
+                {
+                    textBoxKey.Text = encryptor.generateOneTimePadKey(fileToEncryptOrDecrypt.Length);
+                }
             }
             else
             {
