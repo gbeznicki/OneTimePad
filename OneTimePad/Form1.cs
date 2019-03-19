@@ -12,6 +12,7 @@ namespace OneTimePad
     {
         private Encryptor encryptor;
         private byte[] fileToEncryptOrDecrypt;
+        private string fileExtension;
         public Form1()
         {
             InitializeComponent();
@@ -74,7 +75,7 @@ namespace OneTimePad
                 fileToEncryptOrDecrypt = File.ReadAllBytes("D:\\Pulpit\\AA_One_time\\zaszyfrowane");
 
                 //odszyfrowanie zapisanego w pamięci zaszyfrowanego pliku i zapisanie wyniku do pliku
-                File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\odszyfrowane", encryptor.decrypt(fileToEncryptOrDecrypt));
+                File.WriteAllBytes("D:\\Pulpit\\AA_One_time\\odszyfrowane"+fileExtension, encryptor.decrypt(fileToEncryptOrDecrypt));
             }
 
         }
@@ -139,6 +140,7 @@ namespace OneTimePad
             {
                 fileToEncryptOrDecrypt = File.ReadAllBytes(openFileDialog.FileName);
                 IfFIleIsChosen.Text = "Plik został załadowany do pamięci";
+                fileExtension = Path.GetExtension(openFileDialog.FileName);
             }
         }
     }
