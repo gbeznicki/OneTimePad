@@ -44,7 +44,7 @@ namespace OneTimePad
 
                 MessageBox.Show("Szyfrowanie zakończono!");
             }
-            else //TODO: import z pliku i szyfrowanie
+            else
             {
                 if (textBoxKey.Text.Length == 0)
                 {
@@ -83,7 +83,7 @@ namespace OneTimePad
                 MessageBox.Show("Deszyfrowanie zakończono!");
 
             }
-            else //TODO: import z pliku i deszyfrowanie
+            else
             {
                 if (File.Exists("D:\\Pulpit\\AA_One_time\\zaszyfrowane"))
                 {

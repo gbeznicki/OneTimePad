@@ -17,10 +17,17 @@ namespace OneTimePad
             _key = String.Empty;
         }
 
+        /// <summary>
+        /// Metoda deszyfrująca daną parametrem tablicę bajtów korzystając z zapisanego w pamięci klucza
+        /// </summary>
+        /// <param name="toDecrypt">tablica bajtów z danymi do odszyfrowania</param>
+        /// <returns>odszyfrowane dane</returns>
         public byte[] decrypt(byte[] toDecrypt)
         {
+            //zamiana klucza na tablicę bajtów
             byte[] key = Encoding.Default.GetBytes(_key);
 
+            //deszyfrowanie (XOR tablicy zaszyfrowanych danych z tablicą klucza)
             for (int i = 0; i < toDecrypt.Length; i++)
             {
                 toDecrypt[i] ^= key[i];
@@ -29,10 +36,17 @@ namespace OneTimePad
             return toDecrypt;
         }
 
+        /// <summary>
+        /// Metoda szyfrująca daną parametrem tablicę bajtów
+        /// </summary>
+        /// <param name="toEncrypt">tablica bajtów z danymi do zaszyfrowania</param>
+        /// <returns>zaszyfrowane dane</returns>
         public byte[] encrypt(byte[] toEncrypt)
         {
+            //zamiana klucza na tablicę bajtów
             byte[] key = Encoding.Default.GetBytes(_key);
 
+            //szyfrowanie (XOR tablicy danych z tablicą klucza)
             for (int i = 0; i<toEncrypt.Length; i++)
             {
                 toEncrypt[i] ^= key[i];
@@ -41,6 +55,11 @@ namespace OneTimePad
             return toEncrypt;
         }
 
+        /// <summary>
+        /// Metoda generująca losowy klucz szyfrujący
+        /// </summary>
+        /// <param name="keyLength">długość klucza, powinna być nie mniejsza niż długoś tablicy z danymi do zaszyfrowania</param>
+        /// <returns>klucz do szyfrowania</returns>
         public String generateOneTimePadKey(int keyLength)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -55,6 +74,11 @@ namespace OneTimePad
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Metoda zwracająca łańcuch znaków zakodowany w UTF8
+        /// </summary>
+        /// <param name="toConvert">łańcuch znaków do zakodowania</param>
+        /// <returns>łańcuch znaków po kodowaniu</returns>
         public string getUtf8String(string toConvert)
         {
             byte[] bytes = Encoding.Default.GetBytes(toConvert);
